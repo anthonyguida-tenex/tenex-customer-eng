@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TENEX.AI × Hunterdon Healthcare — Securing the Modern Health System</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+@font-face {
+  font-family: 'Good Times';
+  src: url('https://db.onlinewebfonts.com/t/762cff1a40f3afe0e47b0da37d91b7b0.woff2') format('woff2');
+}
+:root {
+  --cyan:   #62D6E5;
+  --navy:   #091722;
+  --navy2:  #0c1e2d;
+  --navy3:  #0f2538;
+  --border: rgba(98,214,229,0.1);
+  --border2:rgba(98,214,229,0.06);
+  --cdim:   rgba(98,214,229,0.1);
+  --cglow:  rgba(98,214,229,0.05);
+  --text:   #d8f0f4;
+  --muted:  #3d6575;
+  --muted2: #5a8090;
+  --white:  #ffffff;
+  --red:    #e8604c;
+  --rdim:   rgba(232,96,76,0.1);
+  --gold:   #f0c040;
+  --gdim:   rgba(240,192,64,0.1);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--navy);color:var(--text);font-family:'Poppins',sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+
+/* CANVAS */
+#particles{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:0.3;}
+
+/* NAV */
+nav{display:flex;align-items:center;justify-content:space-between;padding:18px 60px;border-bottom:1px solid var(--border);background:rgba(9,23,34,0.97);position:sticky;top:0;z-index:100;backdrop-filter:blur(20px);}
+.logo{font-family:'Good Times','Poppins',sans-serif;font-size:1.1rem;color:var(--cyan);letter-spacing:2px;}
+.nav-links{display:flex;gap:28px;align-items:center;}
+.nav-links a{color:var(--muted2);text-decoration:none;font-size:0.7rem;letter-spacing:1.5px;text-transform:uppercase;transition:color 0.2s;}
+.nav-links a:hover{color:var(--cyan);}
+.nav-cta{font-family:'Good Times','Poppins',sans-serif;background:var(--cyan);color:var(--navy);border:none;padding:10px 24px;border-radius:6px;font-size:0.65rem;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:opacity 0.2s,transform 0.15s;}
+.nav-cta:hover{opacity:0.85;transform:translateY(-1px);}
+
+/* PERSONALIZATION BANNER */
+.pers-banner{background:rgba(98,214,229,0.06);border-bottom:1px solid var(--border);padding:10px 60px;display:flex;align-items:center;gap:12px;font-size:0.75rem;color:var(--muted2);position:relative;z-index:99;}
+.pers-banner strong{color:var(--cyan);font-family:'Good Times','Poppins',sans-serif;letter-spacing:1px;font-size:0.65rem;}
+.pers-dot{width:6px;height:6px;border-radius:50%;background:var(--cyan);animation:pulse 2s ease infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.4;transform:scale(1.4);}}
+
+/* HERO */
+.hero{min-height:95vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:120px 24px 80px;position:relative;z-index:1;background:radial-gradient(ellipse at 50% 25%,rgba(98,214,229,0.07) 0%,transparent 65%);}
+.hero-eyebrow{font-family:'Good Times','Poppins',sans-serif;display:flex;align-items:center;gap:14px;margin-bottom:32px;font-size:0.62rem;letter-spacing:3px;text-transform:uppercase;color:var(--muted2);}
+.hero-eyebrow span{width:36px;height:1px;background:var(--cyan);opacity:0.4;}
+.hero h1{font-family:'Good Times','Poppins',sans-serif;font-size:clamp(1.9rem,5.5vw,4.5rem);font-weight:400;line-height:1.1;text-transform:uppercase;color:var(--white);margin-bottom:6px;letter-spacing:1px;}
+.hero h1 .cyan{color:var(--cyan);}
+.hero h1 .dim{color:rgba(255,255,255,0.12);font-size:0.5em;letter-spacing:5px;display:block;margin:8px 0;}
+.hero-sub{font-size:1rem;color:var(--muted2);max-width:600px;margin:28px auto 50px;line-height:1.9;font-weight:300;}
+.hero-cta{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-bottom:56px;}
+.btn-p{font-family:'Good Times','Poppins',sans-serif;background:var(--cyan);color:var(--navy);padding:14px 36px;border-radius:6px;font-size:0.65rem;letter-spacing:2px;text-transform:uppercase;text-decoration:none;transition:opacity 0.2s,transform 0.15s;display:inline-block;}
+.btn-p:hover{opacity:0.85;transform:translateY(-1px);}
+.btn-s{font-family:'Good Times','Poppins',sans-serif;background:transparent;color:var(--cyan);padding:14px 36px;border-radius:6px;font-size:0.65rem;letter-spacing:2px;text-transform:uppercase;text-decoration:none;border:1px solid rgba(98,214,229,0.35);transition:background 0.2s;display:inline-block;}
+.btn-s:hover{background:var(--cdim);}
+
+/* HERO INTEL CARDS */
+.hero-intel{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;max-width:900px;margin:0 auto;}
+.intel-card{background:rgba(98,214,229,0.04);border:1px solid var(--border);border-radius:10px;padding:14px 20px;text-align:left;min-width:200px;flex:1;}
+.intel-label{font-family:'Good Times','Poppins',sans-serif;font-size:0.55rem;letter-spacing:2px;text-transform:uppercase;color:var(--cyan);margin-bottom:6px;}
+.intel-val{font-size:0.88rem;color:var(--white);font-weight:500;}
+.intel-sub{font-size:0.73rem;color:var(--muted2);font-weight:300;margin-top:2px;}
+
+/* SECTION UTILS */
+.section{padding:88px 24px;max-width:1160px;margin:0 auto;position:relative;z-index:1;}
+.s-label{font-family:'Good Times','Poppins',sans-serif;font-size:0.6rem;letter-spacing:3px;text-transform:uppercase;color:var(--cyan);margin-bottom:14px;}
+.s-title{font-family:'Good Times','Poppins',sans-serif;font-size:clamp(1.5rem,2.8vw,2.4rem);font-weight:400;text-transform:uppercase;color:var(--white);margin-bottom:16px;letter-spacing:1px;}
+.s-body{color:var(--muted2);font-size:0.93rem;max-width:640px;margin-bottom:52px;line-height:1.9;font-weight:300;}
+.divider{height:1px;background:linear-gradient(90deg,transparent,rgba(98,214,229,0.18),transparent);}
+
+/* THREAT LANDSCAPE */
+.threat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+.threat-card{background:var(--rdim);border:1px solid rgba(232,96,76,0.15);border-radius:12px;padding:28px;position:relative;overflow:hidden;}
+.threat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--red),transparent);}
+.threat-num{font-family:'Good Times','Poppins',sans-serif;font-size:2.2rem;color:var(--red);line-height:1;margin-bottom:10px;}
+.threat-label{font-family:'Good Times','Poppins',sans-serif;font-size:0.7rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--red);margin-bottom:8px;}
+.threat-desc{font-size:0.82rem;color:var(--muted2);line-height:1.7;font-weight:300;}
+.threat-src{font-size:0.68rem;color:var(--muted);margin-top:10px;font-style:italic;}
+
+/* HUNTERDON PROFILE */
+.profile-wrap{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start;}
+.profile-left{background:var(--navy2);border:1px solid var(--border);border-radius:16px;padding:40px;}
+.profile-left h3{font-family:'Good Times','Poppins',sans-serif;font-size:0.8rem;letter-spacing:2px;text-transform:uppercase;color:var(--cyan);margin-bottom:24px;}
+.profile-stat{display:flex;align-items:flex-start;gap:16px;margin-bottom:22px;padding-bottom:22px;border-bottom:1px solid var(--border2);}
+.profile-stat:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0;}
+.pstat-num{font-family:'Good Times','Poppins',sans-serif;font-size:1.5rem;color:var(--cyan);min-width:70px;line-height:1;}
+.pstat-info{}
+.pstat-label{font-size:0.83rem;font-weight:500;color:var(--white);margin-bottom:2px;}
+.pstat-desc{font-size:0.78rem;color:var(--muted2);font-weight:300;line-height:1.55;}
+.profile-right{display:flex;flex-direction:column;gap:16px;}
+.profile-tag{background:var(--navy2);border:1px solid var(--border);border-radius:12px;padding:22px 26px;}
+.profile-tag.google{border-color:rgba(98,214,229,0.25);background:var(--cdim);}
+.ptag-label{font-family:'Good Times','Poppins',sans-serif;font-size:0.58rem;letter-spacing:2px;text-transform:uppercase;color:var(--cyan);margin-bottom:8px;}
+.ptag-title{font-size:0.92rem;font-weight:600;color:var(--white);margin-bottom:6px;}
+.ptag-body{font-size:0.8rem;color:var(--muted2);line-height:1.65;font-weight:300;}
+.ptag-highlight{color:var(--cyan);font-weight:500;}
+
+/* EXPOSURE SECTION */
+.exposure-wrap{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+.exp-card{border-radius:12px;padding:30px;position:relative;overflow:hidden;}
+.exp-card.risk{background:var(--rdim);border:1px solid rgba(232,96,76,0.15);}
+.exp-card.risk::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--red),transparent);}
+.exp-card.solved{background:var(--cdim);border:1px solid rgba(98,214,229,0.2);}
+.exp-card.solved::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--cyan),transparent);}
+.exp-icon{font-size:1.8rem;margin-bottom:16px;}
+.exp-title{font-family:'Good Times','Poppins',sans-serif;font-size:0.75rem;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:12px;}
+.exp-card.risk .exp-title{color:var(--red);}
+.exp-card.solved .exp-title{color:var(--cyan);}
+.exp-list{list-style:none;display:flex;flex-direction:column;gap:10px;}
+.exp-list li{font-size:0.83rem;line-height:1.6;color:var(--muted2);font-weight:300;display:flex;gap:10px;align-items:flex-start;}
+.exp-list li::before{flex-shrink:0;margin-top:2px;}
+.exp-card.risk .exp-list li::before{content:'▸';color:var(--red);}
+.exp-card.solved .exp-list li::before{content:'✓';color:var(--cyan);font-weight:700;}
+
+/* ARCHITECTURE */
+.arch-wrap{display:grid;grid-template-columns:1fr 80px 1fr;gap:0;align-items:stretch;}
+.arch-col{background:var(--navy2);border:1px solid var(--border);border-radius:16px;padding:36px;display:flex;flex-direction:column;}
+.arch-col.tenex{border-color:rgba(98,214,229,0.25);position:relative;overflow:hidden;}
+.arch-col.tenex::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(98,214,229,0.05),transparent 70%);pointer-events:none;}
+.arch-col.cs{border-color:rgba(232,96,76,0.15);}
+.arch-vs{display:flex;align-items:center;justify-content:center;padding:0 0;}
+.vs-pill{font-family:'Good Times','Poppins',sans-serif;font-size:0.8rem;color:var(--muted);letter-spacing:3px;writing-mode:vertical-rl;text-transform:uppercase;border:1px solid var(--border);padding:18px 8px;border-radius:100px;}
+.arch-brand{font-family:'Good Times','Poppins',sans-serif;font-size:0.68rem;letter-spacing:2px;text-transform:uppercase;margin-bottom:6px;}
+.arch-brand.t{color:var(--cyan);}
+.arch-brand.c{color:var(--red);}
+.arch-title{font-size:1.05rem;font-weight:600;color:var(--white);margin-bottom:4px;}
+.arch-sub{color:var(--muted2);font-size:0.78rem;margin-bottom:28px;font-weight:300;}
+.layer{border-radius:8px;padding:14px 18px;margin-bottom:10px;}
+.layer:last-child{margin-bottom:0;}
+.layer-label{font-family:'Good Times','Poppins',sans-serif;font-size:0.62rem;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:4px;}
+.layer-desc{font-size:0.79rem;color:var(--muted2);font-weight:300;line-height:1.6;}
+.l-cyan{background:var(--cdim);border:1px solid rgba(98,214,229,0.2);} .l-cyan .layer-label{color:var(--cyan);}
+.l-google{background:rgba(66,133,244,0.07);border:1px solid rgba(66,133,244,0.18);} .l-google .layer-label{color:#6aabf7;}
+.l-base{background:rgba(255,255,255,0.02);border:1px solid var(--border2);} .l-base .layer-label{color:var(--muted2);}
+.l-cs{background:rgba(232,96,76,0.07);border:1px solid rgba(232,96,76,0.15);} .l-cs .layer-label{color:var(--red);}
+.l-kernel{background:rgba(232,96,76,0.12);border:1px solid rgba(232,96,76,0.25);} .l-kernel .layer-label{color:var(--red);}
+.arch-badges{margin-top:20px;display:flex;flex-direction:column;gap:8px;}
+.abadge{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:100px;font-size:0.72rem;font-weight:600;}
+.abadge.good{background:var(--cdim);border:1px solid rgba(98,214,229,0.3);color:var(--cyan);}
+.abadge.bad{background:var(--rdim);border:1px solid rgba(232,96,76,0.2);color:var(--red);}
+
+/* METRICS */
+.metrics-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+.metric-card{background:var(--navy2);border:1px solid var(--border2);border-radius:12px;padding:26px 28px;position:relative;overflow:hidden;}
+.metric-card::after{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,var(--cyan),transparent);opacity:0.4;}
+.metric-topic{font-family:'Good Times','Poppins',sans-serif;font-size:0.58rem;letter-spacing:2px;text-transform:uppercase;color:var(--muted2);margin-bottom:18px;}
+.metric-row{display:grid;grid-template-columns:1fr 1fr;gap:0;border-top:1px solid var(--border2);padding-top:14px;}
+.metric-side{padding:0 12px;}
+.metric-side:first-child{padding-left:0;border-right:1px solid var(--border2);}
+.metric-side:last-child{padding-right:0;}
+.mbrand{font-family:'Good Times','Poppins',sans-serif;font-size:0.55rem;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px;}
+.mbrand.t{color:var(--cyan);}
+.mbrand.c{color:var(--red);}
+.mval{font-family:'Good Times','Poppins',sans-serif;font-size:1.4rem;line-height:1;margin-bottom:5px;}
+.mval.t{color:var(--cyan);}
+.mval.c{color:rgba(232,96,76,0.6);}
+.mdesc{font-size:0.74rem;color:var(--muted2);line-height:1.55;font-weight:300;}
+
+/* FEATURE TABLE */
+.ftable{border-radius:12px;overflow:hidden;border:1px solid var(--border);}
+table{width:100%;border-collapse:collapse;}
+thead{background:var(--navy3);}
+thead th{padding:18px 24px;text-align:left;font-family:'Good Times','Poppins',sans-serif;font-size:0.62rem;letter-spacing:2px;text-transform:uppercase;}
+thead th:first-child{color:var(--muted);}
+thead th.th-t{color:var(--cyan);}
+thead th.th-c{color:var(--red);}
+tbody tr{border-top:1px solid var(--border2);}
+tbody tr:hover{background:rgba(98,214,229,0.02);}
+td{padding:16px 24px;font-size:0.84rem;vertical-align:top;font-weight:300;}
+td:first-child{font-family:'Good Times','Poppins',sans-serif;font-size:0.62rem;letter-spacing:1px;text-transform:uppercase;color:var(--muted2);width:22%;}
+td.tv{color:#a8e8f0;}
+td.cv{color:#2a4050;}
+.badge{display:inline-block;background:var(--cdim);border:1px solid rgba(98,214,229,0.3);color:var(--cyan);padding:2px 12px;border-radius:100px;font-size:0.7rem;font-weight:600;}
+
+/* ROI SECTION */
+.roi-wrap{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;}
+.roi-card{background:var(--navy2);border:1px solid var(--border2);border-radius:12px;padding:28px;text-align:center;transition:border-color 0.25s,transform 0.25s;}
+.roi-card:hover{border-color:rgba(98,214,229,0.3);transform:translateY(-4px);}
+.roi-icon{font-size:2rem;margin-bottom:14px;}
+.roi-num{font-family:'Good Times','Poppins',sans-serif;font-size:2rem;color:var(--cyan);line-height:1;margin-bottom:8px;}
+.roi-label{font-size:0.8rem;color:var(--muted2);font-weight:300;line-height:1.6;}
+
+/* QUOTE */
+.quote-section{background:var(--navy2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:72px 24px;text-align:center;position:relative;z-index:1;overflow:hidden;}
+.quote-section::before{content:'"';position:absolute;font-size:20rem;color:rgba(98,214,229,0.02);top:-60px;left:50%;transform:translateX(-50%);font-family:Georgia,serif;pointer-events:none;line-height:1;}
+.quote-section blockquote{max-width:820px;margin:0 auto;font-size:clamp(1rem,2.2vw,1.4rem);font-weight:300;line-height:1.8;color:var(--white);position:relative;}
+.q-cyan{color:var(--cyan);}
+.quote-section cite{display:block;margin-top:22px;font-family:'Good Times','Poppins',sans-serif;color:var(--muted);font-style:normal;font-size:0.6rem;letter-spacing:3px;text-transform:uppercase;}
+
+/* CTA FOOTER */
+.cta-section{min-height:55vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:96px 24px;position:relative;z-index:1;background:radial-gradient(ellipse at 50% 100%,rgba(98,214,229,0.07) 0%,transparent 60%);}
+.cta-section p{color:var(--muted2);max-width:520px;margin:0 auto 40px;line-height:1.9;font-weight:300;}
+.cta-partners{font-family:'Good Times','Poppins',sans-serif;font-size:0.6rem;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-top:32px;}
+.cta-partners span{color:var(--cyan);}
+
+/* FOOTER */
+footer{border-top:1px solid var(--border);padding:26px 60px;display:flex;align-items:center;justify-content:space-between;color:var(--muted);font-size:0.75rem;font-weight:300;position:relative;z-index:1;}
+footer a{color:var(--muted);text-decoration:none;font-family:'Good Times','Poppins',sans-serif;font-size:0.62rem;letter-spacing:1px;}
+
+/* RESPONSIVE */
+@media(max-width:960px){
+  .threat-grid,.metrics-grid,.roi-wrap{grid-template-columns:1fr 1fr;}
+  .arch-wrap{grid-template-columns:1fr;}
+  .arch-vs{display:none;}
+  .profile-wrap,.exposure-wrap{grid-template-columns:1fr;}
+  nav{padding:14px 20px;}
+  .nav-links{display:none;}
+  .pers-banner{padding:10px 20px;}
+  footer{flex-direction:column;gap:10px;text-align:center;padding:24px 20px;}
+}
+@media(max-width:600px){
+  .threat-grid,.metrics-grid,.roi-wrap{grid-template-columns:1fr;}
+  .hero-intel{flex-direction:column;}
+  thead th,td{padding:12px 14px;}
+}
+</style>
+</head>
+<body>
+
+<canvas id="particles"></canvas>
+
+<!-- NAV -->
+<nav>
+  <span class="logo">TENEX.AI</span>
+  <div class="nav-links">
+    <a href="#threat">Threat Landscape</a>
+    <a href="#profile">Hunterdon Profile</a>
+    <a href="#architecture">Architecture</a>
+    <a href="#roi">ROI</a>
+  </div>
+  <button class="nav-cta">Schedule Demo</button>
+</nav>
+
+<!-- PERSONALIZATION BANNER -->
+<div class="pers-banner">
+  <div class="pers-dot"></div>
+  <span>Prepared exclusively for &nbsp;<strong>Hunterdon Healthcare</strong>&nbsp; · Flemington, NJ · 178-Bed Teaching Hospital · 3,000 Employees · Google Workspace Enterprise Plus</span>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow"><span></span>Security Operations · Built for Healthcare<span></span></div>
+  <h1>
+    <span class="cyan">Protecting Hunterdon.</span>
+    <span class="dim">Powered by</span>
+    TENEX × Google
+  </h1>
+  <p class="hero-sub">You already invested in Google Workspace to protect your patients and caregivers. TENEX transforms that investment into a fully autonomous, AI-native SOC — purpose-built for the compliance demands and threat landscape of modern healthcare.</p>
+  <div class="hero-cta">
+    <a href="#architecture" class="btn-p">See How It Works</a>
+    <a href="#roi" class="btn-s">View the ROI Case</a>
+  </div>
+  <div class="hero-intel">
+    <div class="intel-card">
+      <div class="intel-label">Hunterdon's Platform</div>
+      <div class="intel-val">Google Workspace Enterprise+</div>
+      <div class="intel-sub">3,000 staff · Gmail · Drive · DLP · MDM</div>
+    </div>
+    <div class="intel-card">
+      <div class="intel-label">Infrastructure Scale</div>
+      <div class="intel-val">100+ Clinical Applications</div>
+      <div class="intel-sub">178-bed hospital + 60 affiliated ambulatory sites</div>
+    </div>
+    <div class="intel-card">
+      <div class="intel-label">Compliance Scope</div>
+      <div class="intel-val">HIPAA · HITECH · SOC 2</div>
+      <div class="intel-sub">ePHI protection across inpatient + outpatient</div>
+    </div>
+    <div class="intel-card">
+      <div class="intel-label">Average Breach Cost</div>
+      <div class="intel-val" style="color:var(--red)">$9.77M in Healthcare</div>
+      <div class="intel-sub">Highest of any industry — 3× the global average</div>
+    </div>
+  </div>
+</div>
+
+<!-- THREAT LANDSCAPE -->
+<div class="divider"></div>
+<div class="section" id="threat">
+  <div class="s-label">The Threat Reality</div>
+  <div class="s-title">Healthcare is the<br>Most Targeted Sector.</div>
+  <p class="s-body">Hospitals are high-value targets: rich patient data, 24/7 operational pressure, complex multi-system environments, and historically lean security teams. Hunterdon's 100+ application environment and 60+ affiliated sites represent a significant and growing attack surface.</p>
+  <div class="threat-grid">
+    <div class="threat-card">
+      <div class="threat-num">278%</div>
+      <div class="threat-label">Ransomware Surge</div>
+      <div class="threat-desc">Ransomware attacks on healthcare organizations have surged 278% since 2018. Hospitals face operational shutdown, care disruption, and multi-million dollar recovery costs.</div>
+      <div class="threat-src">Source: HHS Office for Civil Rights, 2024</div>
+    </div>
+    <div class="threat-card">
+      <div class="threat-num">$9.77M</div>
+      <div class="threat-label">Avg. Breach Cost</div>
+      <div class="threat-desc">Healthcare holds the highest average breach cost of any industry — more than double the global average of $4.88M — and has for 13 consecutive years.</div>
+      <div class="threat-src">Source: IBM Cost of a Data Breach Report, 2024</div>
+    </div>
+    <div class="threat-card">
+      <div class="threat-num">80%</div>
+      <div class="threat-label">Hacking-Related</div>
+      <div class="threat-desc">80% of major healthcare breaches in 2023 were due to hacking or IT incidents — increasingly targeting cloud collaboration tools, identity systems, and connected clinical apps.</div>
+      <div class="threat-src">Source: HIPAA Journal, 2024</div>
+    </div>
+    <div class="threat-card">
+      <div class="threat-num">141</div>
+      <div class="threat-label">Hospitals Hit in 2023</div>
+      <div class="threat-desc">At least 141 hospitals were directly impacted by ransomware in 2023 alone — disrupting patient care, forcing EHR downtime, and diverting emergency cases.</div>
+      <div class="threat-src">Source: Emsisoft Threat Report, 2024</div>
+    </div>
+    <div class="threat-card">
+      <div class="threat-num">$1.5M</div>
+      <div class="threat-label">Avg. Ransom Demand</div>
+      <div class="threat-desc">The average ransom demand in healthcare reached $1.5M in 2023 — a staggering increase from $5,000 in 2022 — with 47% of victims ultimately paying.</div>
+      <div class="threat-src">Source: HIPAA Journal, 2024</div>
+    </div>
+    <div class="threat-card">
+      <div class="threat-num">&lt;6%</div>
+      <div class="threat-label">Security IT Budget</div>
+      <div class="threat-desc">Healthcare organizations allocate less than 6% of IT budgets to security on average — well below the 10–15% standard in financial services — creating persistent gaps that attackers exploit.</div>
+      <div class="threat-src">Source: HIPAA Journal / Health-ISAC</div>
+    </div>
+  </div>
+</div>
+
+<!-- HUNTERDON PROFILE -->
+<div class="divider"></div>
+<div class="section" id="profile">
+  <div class="s-label">Your Environment</div>
+  <div class="s-title">Hunterdon Healthcare:<br>The Security Imperative</div>
+  <p class="s-body">Hunterdon's Google-first infrastructure, growing ambulatory network, and HIPAA obligations create both an excellent foundation and a complex security environment that demands purpose-built protection.</p>
+  <div class="profile-wrap">
+    <div class="profile-left">
+      <h3>Organization Profile</h3>
+      <div class="profile-stat">
+        <div class="pstat-num">178</div>
+        <div class="pstat-info">
+          <div class="pstat-label">Bed Teaching Hospital</div>
+          <div class="pstat-desc">Flemington, NJ — central NJ's primary regional health system serving Hunterdon County and surrounding communities</div>
+        </div>
+      </div>
+      <div class="profile-stat">
+        <div class="pstat-num">3,000</div>
+        <div class="pstat-info">
+          <div class="pstat-label">Employees on Google Workspace</div>
+          <div class="pstat-desc">All staff on Gmail, Calendar, Drive, and Google Meet — Enterprise Plus license with HIPAA-compliant data handling</div>
+        </div>
+      </div>
+      <div class="profile-stat">
+        <div class="pstat-num">60+</div>
+        <div class="pstat-info">
+          <div class="pstat-label">Affiliated Ambulatory Facilities</div>
+          <div class="pstat-desc">Each site represents an endpoint, an identity surface, and a potential entry vector — across a distributed geography</div>
+        </div>
+      </div>
+      <div class="profile-stat">
+        <div class="pstat-num">100+</div>
+        <div class="pstat-info">
+          <div class="pstat-label">Clinical & Business Applications</div>
+          <div class="pstat-desc">Including EMR, patient portals, integration engines, and best-of-breed departmental tools — all generating security telemetry</div>
+        </div>
+      </div>
+    </div>
+    <div class="profile-right">
+      <div class="profile-tag google">
+        <div class="ptag-label">✓ Google Advantage — Already In Place</div>
+        <div class="ptag-title">You're Already Ahead of Most Hospitals</div>
+        <div class="ptag-body">Hunterdon made a landmark commitment to Google Workspace — saving <span class="ptag-highlight">$1.3M over three years</span> while enhancing security posture and reclaiming 30% of caregiver time. Google's DLP, MDM, and encryption-at-rest are already protecting your ePHI. <br><br>TENEX doesn't replace any of this. It activates the security telemetry that Google already produces — and responds to threats at machine speed, 24/7.</div>
+      </div>
+      <div class="profile-tag">
+        <div class="ptag-label">⚠ The Gap That Remains</div>
+        <div class="ptag-title">Google Workspace Secures Collaboration. TENEX Secures Everything Else.</div>
+        <div class="ptag-body">Google Workspace protects email, files, and identity. But your 100+ clinical applications, connected devices, network traffic, and ambulatory sites generate thousands of security events daily that need triage, investigation, and response — at a speed no human team can sustain alone.</div>
+      </div>
+      <div class="profile-tag">
+        <div class="ptag-label">🏥 Healthcare-Specific Compliance</div>
+        <div class="ptag-title">HIPAA, HITECH & OCR Scrutiny</div>
+        <div class="ptag-body">OCR now mandates audit controls, documented risk analysis, and incident response capabilities. TENEX provides machine-speed detection and response with full audit trails — purpose-built for HIPAA Security Rule compliance and OCR investigation readiness.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- EXPOSURE ANALYSIS -->
+<div class="divider"></div>
+<div class="section">
+  <div class="s-label">Risk vs. Resolution</div>
+  <div class="s-title">Where Hunterdon Is<br>Exposed — and Protected</div>
+  <p class="s-body">A distributed hospital network with 100+ applications, 3,000 users, and 60+ sites is exactly the environment ransomware groups target. Here's how the risk maps — and how TENEX + Google SecOps closes it.</p>
+  <div class="exposure-wrap">
+    <div class="exp-card risk">
+      <div class="exp-icon">⚠️</div>
+      <div class="exp-title">Without AI-Native SOC Coverage</div>
+      <ul class="exp-list">
+        <li>60+ ambulatory sites generate alerts that no lean security team can triage manually at scale</li>
+        <li>100+ clinical applications create integration points that are difficult to monitor holistically</li>
+        <li>EMR downtime from a ransomware event forces paper-based fallback, delaying patient care and triggering OCR notification</li>
+        <li>Alert fatigue causes real threats to be missed in the noise — studies show 45% of security alerts go uninvestigated</li>
+        <li>HIPAA breach involving ePHI of even 500 patients triggers public HHS breach portal listing and potential investigation</li>
+        <li>Average $9.77M breach cost dwarfs the investment in proactive detection and response</li>
+      </ul>
+    </div>
+    <div class="exp-card solved">
+      <div class="exp-icon">✦</div>
+      <div class="exp-title">TENEX × Google SecOps in Place</div>
+      <ul class="exp-list">
+        <li>Every alert across all 60+ sites and 100+ applications triaged autonomously in under 1 minute — nothing slips through</li>
+        <li>Google SecOps ingests telemetry from your entire stack; TENEX applies agentic AI to detect, prioritize, and respond</li>
+        <li>Ransomware detected and contained at the early lateral movement stage — before EMR encryption or operational shutdown</li>
+        <li>Zero new kernel agents required — your existing Google infrastructure is the sensor layer</li>
+        <li>Full HIPAA audit trail of all detection, investigation, and response actions — ready for OCR review</li>
+        <li>Your security investment anchors on the Google infrastructure you already paid for — no rip-and-replace, no displacement</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ARCHITECTURE -->
+<div class="divider"></div>
+<div class="section" id="architecture">
+  <div class="s-label">Architecture</div>
+  <div class="s-title">Two Models.<br>One Clear Winner for Healthcare.</div>
+  <p class="s-body">CrowdStrike MDR asks you to displace your Google investment and deploy a new kernel-level agent across your entire endpoint fleet. TENEX does the opposite — it makes your existing Google infrastructure the foundation of an AI-native SOC.</p>
+  <div class="arch-wrap">
+    <div class="arch-col tenex">
+      <div class="arch-brand t">TENEX.AI × Google SecOps</div>
+      <div class="arch-title">The AI-Native Stack for Hunterdon</div>
+      <div class="arch-sub">Additive · HIPAA-ready · No kernel risk · Protects your Google investment</div>
+      <div class="layer l-cyan">
+        <div class="layer-label">🤖 TENEX Agentic SOC</div>
+        <div class="layer-desc">Autonomous triage of 100% of alerts in &lt;1 min. Agentic decision loops handle detection → investigation → containment without analyst intervention. Your team escalates true exceptions only.</div>
+      </div>
+      <div class="layer l-google">
+        <div class="layer-label">🔵 Google SecOps (Chronicle SIEM/SOAR)</div>
+        <div class="layer-desc">Petabyte-scale security data lake ingesting telemetry from your 100+ apps, 60+ sites, Google Workspace, and all network sources. HIPAA-compliant. Already proven at Hunterdon.</div>
+      </div>
+      <div class="layer l-base">
+        <div class="layer-label">💻 Hunterdon's Existing Infrastructure</div>
+        <div class="layer-desc">EMR, clinical apps, Google Workspace, endpoints, mobile devices, network — all telemetry sources. Zero new agents deployed. No disruption to clinical operations.</div>
+      </div>
+      <div class="arch-badges">
+        <div class="abadge good">✓ Amplifies your $1.3M Google investment</div>
+        <div class="abadge good">✓ HIPAA audit trail built in</div>
+        <div class="abadge good">✓ Zero kernel agent — zero new endpoint risk</div>
+      </div>
+    </div>
+    <div class="arch-vs"><div class="vs-pill">vs</div></div>
+    <div class="arch-col cs">
+      <div class="arch-brand c">CrowdStrike Falcon Complete MDR</div>
+      <div class="arch-title">The Legacy Alternative</div>
+      <div class="arch-sub">Displacement required · Kernel dependency · AI retrofitted on top</div>
+      <div class="layer l-cs">
+        <div class="layer-label">🧩 Charlotte AI</div>
+        <div class="layer-desc">AI assistant added onto Falcon's existing platform. Customer reviews note inconsistent adoption and limited noise reduction in complex multi-application environments like Hunterdon's.</div>
+      </div>
+      <div class="layer l-cs">
+        <div class="layer-label">🔧 Falcon Platform (Modular Licensing)</div>
+        <div class="layer-desc">Industry-leading EDR, but each capability — SIEM, SOAR, identity, threat intel — requires separate licensing. Costs compound across 3,000 users and 60+ sites. Replaces, not extends, your Google stack.</div>
+      </div>
+      <div class="layer l-kernel">
+        <div class="layer-label">⚠️ Falcon Kernel Sensor — Every Endpoint</div>
+        <div class="layer-desc">Proprietary sensor deployed at OS kernel level across all clinical endpoints. A single faulty content update can crash every Windows machine simultaneously — including workstations running your EMR.</div>
+      </div>
+      <div class="arch-badges">
+        <div class="abadge bad">✗ Requires displacing your Google investment</div>
+        <div class="abadge bad">✗ Kernel agent = new single point of failure</div>
+        <div class="abadge bad">✗ Per-module costs grow with each Hunterdon site</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- METRICS -->
+<div class="divider"></div>
+<div class="section">
+  <div class="s-label">Head to Head</div>
+  <div class="s-title">What Matters Most<br>to Hunterdon</div>
+  <p class="s-body">Mapped to Hunterdon's specific environment — 3,000 users, 60+ sites, 100+ applications, and HIPAA obligations.</p>
+  <div class="metrics-grid">
+    <div class="metric-card">
+      <div class="metric-topic">Alert Triage Speed</div>
+      <div class="metric-row">
+        <div class="metric-side"><div class="mbrand t">TENEX × Google</div><div class="mval t">&lt;1 MIN</div><div class="mdesc">100% of alerts across all 60+ Hunterdon sites — autonomously</div></div>
+        <div class="metric-side"><div class="mbrand c">CrowdStrike MDR</div><div class="mval c">Variable</div><div class="mdesc">Analyst-dependent; alert volume at Hunterdon's scale creates inevitable backlog</div></div>
+      </div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-topic">Clinical Endpoint Risk</div>
+      <div class="metric-row">
+        <div class="metric-side"><div class="mbrand t">TENEX × Google</div><div class="mval t">Zero</div><div class="mdesc">No kernel agents on EMR workstations — no new disruption risk to clinical ops</div></div>
+        <div class="metric-side"><div class="mbrand c">CrowdStrike MDR</div><div class="mval c">High</div><div class="mdesc">Kernel sensor on every clinical endpoint — one bad update risks EMR downtime</div></div>
+      </div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-topic">Google Investment Protection</div>
+      <div class="metric-row">
+        <div class="metric-side"><div class="mbrand t">TENEX × Google</div><div class="mval t">100%</div><div class="mdesc">Amplifies your existing $1.3M Google Workspace savings and security stack</div></div>
+        <div class="metric-side"><div class="mbrand c">CrowdStrike MDR</div><div class="mval c">None</div><div class="mdesc">Requires displacing Google SecOps — your prior investment goes to waste</div></div>
+      </div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-topic">HIPAA Compliance Posture</div>
+      <div class="metric-row">
+        <div class="metric-side"><div class="mbrand t">TENEX × Google</div><div class="mval t" style="font-size:1rem;padding-top:4px;">Built In</div><div class="mdesc">Full audit trails, risk documentation, and incident response records for OCR readiness</div></div>
+        <div class="metric-side"><div class="mbrand c">CrowdStrike MDR</div><div class="mval c" style="font-size:1rem;padding-top:4px;">Add-On</div><div class="mdesc">HIPAA controls require additional configuration and validation across each module</div></div>
+      </div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-topic">3-Year TCO (3,000 users)</div>
+      <div class="metric-row">
+        <div class="metric-side"><div class="mbrand t">TENEX × Google</div><div class="mval t" style="font-size:1rem;padding-top:4px;">Lower</div><div class="mdesc">Outcome-based pricing on top of existing Google budget — no new platform cost</div></div>
+        <div class="metric-side"><div class="mbrand c">CrowdStrike MDR</div><div class="mval c" style="font-size:1rem;padding-top:4px;">Higher</div><div class="mdesc">Per-user + per-module across 3,000 staff and 60+ sites compounds significantly</div></div>
+      </div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-topic">Deployment Disruption</div>
+      <div class="metric-row">
+        <div class="metric-side"><div class="mbrand t">TENEX × Google</div><div class="mval t">Minimal</div><div class="mdesc">No clinical workflow changes — TENEX activates on your existing Google telemetry</div></div>
+        <div class="metric-side"><div class="mbrand c">CrowdStrike MDR</div><div class="mval c">Significant</div><div class="mdesc">Agent rollout across 3,000 clinical endpoints and 60+ sites = extended deployment risk</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FEATURE TABLE -->
+<div class="divider"></div>
+<div class="section">
+  <div class="s-label">Full Comparison</div>
+  <div class="s-title">Feature by Feature</div>
+  <p class="s-body">Every dimension Hunterdon's security and procurement teams will evaluate — mapped to your specific environment.</p>
+  <div class="ftable">
+    <table>
+      <thead>
+        <tr>
+          <th>Capability</th>
+          <th class="th-t">TENEX.AI × Google SecOps</th>
+          <th class="th-c">CrowdStrike Falcon Complete</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Alert Triage</td><td class="tv"><span class="badge">&lt;1 min · 100% autonomous</span></td><td class="cv">Analyst-dependent; volume at Hunterdon's scale creates backlog</td></tr>
+        <tr><td>Endpoint Agent</td><td class="tv">None required — zero new clinical endpoint risk</td><td class="cv">Kernel-level Falcon sensor on every EMR workstation and clinical device</td></tr>
+        <tr><td>Google Integration</td><td class="tv">Native — TENEX is purpose-built on Google SecOps / Chronicle</td><td class="cv">Parallel investment — displaces, not extends, your Google stack</td></tr>
+        <tr><td>HIPAA Compliance</td><td class="tv">Built-in audit trails, ePHI access logging, OCR-ready documentation</td><td class="cv">Requires additional configuration across modules for full HIPAA alignment</td></tr>
+        <tr><td>Multi-Site Coverage</td><td class="tv">All 60+ Hunterdon ambulatory sites covered under one unified platform</td><td class="cv">Per-site / per-endpoint licensing model; costs compound across distributed network</td></tr>
+        <tr><td>AI Foundation</td><td class="tv">AI-native architecture — agentic SOC is the operating model</td><td class="cv">Charlotte AI overlaid on 2011 platform architecture</td></tr>
+        <tr><td>Ransomware Defense</td><td class="tv">Early lateral movement detection before EMR encryption or shutdown</td><td class="cv">Kernel sensor detection — but a bad update can itself cause system-wide outage</td></tr>
+        <tr><td>Clinical Ops Impact</td><td class="tv">Zero workflow disruption — no agent rollout across clinical staff</td><td class="cv">Agent deployment across 3,000 clinical endpoints requires IT coordination and risk</td></tr>
+        <tr><td>Pricing Model</td><td class="tv">Outcome-based — anchors on existing Google budget</td><td class="cv">Per-user + per-module; 3,000 users × 60+ sites compounds fast</td></tr>
+        <tr><td>Deployment Speed</td><td class="tv">Rapid — connects to existing Google SecOps telemetry</td><td class="cv">Extended — agent rollout and platform migration across all sites required</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ROI -->
+<div class="divider"></div>
+<div class="section" id="roi">
+  <div class="s-label">The Business Case</div>
+  <div class="s-title">ROI That Speaks to<br>Your CFO and Board</div>
+  <p class="s-body">Hunterdon's Google Workspace investment already saved $1.3M in three years. TENEX makes that investment the foundation of a full AI-native SOC — at a fraction of what a new platform displacement would cost.</p>
+  <div class="roi-wrap">
+    <div class="roi-card">
+      <div class="roi-icon">💰</div>
+      <div class="roi-num">$1.3M</div>
+      <div class="roi-label">Already saved by Hunterdon's Google Workspace investment — TENEX protects and amplifies it, not replaces it</div>
+    </div>
+    <div class="roi-card">
+      <div class="roi-icon">🏥</div>
+      <div class="roi-num">$9.77M</div>
+      <div class="roi-label">Average cost of a healthcare breach — the avoided breach cost alone justifies the investment many times over</div>
+    </div>
+    <div class="roi-card">
+      <div class="roi-icon">⚡</div>
+      <div class="roi-num">&lt;1 MIN</div>
+      <div class="roi-label">Triage on every alert — so your lean security team focuses exclusively on what matters, not noise</div>
+    </div>
+    <div class="roi-card">
+      <div class="roi-icon">🔒</div>
+      <div class="roi-num">Zero</div>
+      <div class="roi-label">New kernel agents deployed across clinical endpoints — no new single points of failure introduced into your EMR environment</div>
+    </div>
+    <div class="roi-card">
+      <div class="roi-icon">📋</div>
+      <div class="roi-num">100%</div>
+      <div class="roi-label">HIPAA audit trail coverage — every detection, investigation, and response action documented and OCR-ready</div>
+    </div>
+    <div class="roi-card">
+      <div class="roi-icon">📅</div>
+      <div class="roi-num">30 Days</div>
+      <div class="roi-label">Parallel evaluation available — run TENEX alongside your current tools and compare results in your own environment</div>
+    </div>
+  </div>
+</div>
+
+<!-- QUOTE -->
+<div class="quote-section">
+  <blockquote>
+    Hunterdon's commitment to Google Workspace wasn't just a productivity decision —<br>
+    it was a <span class="q-cyan">security decision</span>. TENEX is what turns that decision into<br>
+    a <span class="q-cyan">fully autonomous SOC</span> — one that protects your patients, your ePHI,<br>
+    and your caregivers around the clock, at machine speed.
+  </blockquote>
+  <cite>— TENEX.AI · Healthcare Security Operations · 2026</cite>
+</div>
+
+<!-- CTA -->
+<div class="cta-section">
+  <div class="s-label">Next Step for Hunterdon</div>
+  <div class="s-title" style="margin-bottom:16px;">30 Days.<br><span style="color:var(--cyan);">Side by Side.</span></div>
+  <p>Let us run TENEX on your Google SecOps telemetry alongside your current security stack for 30 days. You'll see real alert volume, real triage speed, and real detection quality — in your own environment, with your own data, at zero risk.</p>
+  <div class="hero-cta">
+    <a href="#" class="btn-p">Schedule Hunterdon Demo</a>
+    <a href="#" class="btn-s">Download the Full Brief</a>
+  </div>
+  <div class="cta-partners">Backed by <span>Crosspoint Capital</span> · <span>a16z</span> · <span>Shield Capital</span> &nbsp;·&nbsp; $18M Revenue · Fortune 500 Customers Live</div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <span class="logo" style="font-size:0.95rem;">TENEX.AI</span>
+  <span>Prepared exclusively for Hunterdon Healthcare · Flemington, NJ · 2026</span>
+  <a href="https://tenex.ai">tenex.ai</a>
+</footer>
+
+<script>
+const canvas = document.getElementById('particles');
+const ctx = canvas.getContext('2d');
+let W, H, pts = [];
+function resize(){W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight;}
+resize(); window.addEventListener('resize',resize);
+for(let i=0;i<90;i++) pts.push({x:Math.random()*3000,y:Math.random()*3000,r:Math.random()*1.1+0.3,vx:(Math.random()-.5)*.12,vy:(Math.random()-.5)*.12,a:Math.random()*.35+0.08});
+function draw(){
+  ctx.clearRect(0,0,W,H);
+  pts.forEach(p=>{
+    p.x+=p.vx; p.y+=p.vy;
+    if(p.x<0)p.x=W; if(p.x>W)p.x=0;
+    if(p.y<0)p.y=H; if(p.y>H)p.y=0;
+    ctx.beginPath(); ctx.arc(p.x%W,p.y%H,p.r,0,Math.PI*2);
+    ctx.fillStyle=`rgba(98,214,229,${p.a})`; ctx.fill();
+  });
+  for(let i=0;i<pts.length;i++) for(let j=i+1;j<pts.length;j++){
+    const dx=(pts[i].x%W)-(pts[j].x%W), dy=(pts[i].y%H)-(pts[j].y%H), d=Math.sqrt(dx*dx+dy*dy);
+    if(d<110){ctx.beginPath();ctx.moveTo(pts[i].x%W,pts[i].y%H);ctx.lineTo(pts[j].x%W,pts[j].y%H);ctx.strokeStyle=`rgba(98,214,229,${.055*(1-d/110)})`;ctx.lineWidth=.5;ctx.stroke();}
+  }
+  requestAnimationFrame(draw);
+}
+draw();
+</script>
+</body>
+</html>
